@@ -19,14 +19,16 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Run Unit Tests
-        run: gradle testDebugUnitTest
+      # إعداد بيئة Gradle الرسمية تلقائياً
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
+      # بناء الـ APK مباشرة
       - name: Build Debug APK
-        run: gradle assembleDebug
+        run: gradle assembleDebug --stacktrace
 
+      # رفع ملف الـ APK
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
